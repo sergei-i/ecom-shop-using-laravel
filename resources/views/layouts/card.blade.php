@@ -4,11 +4,10 @@
 
 
         </div>
-        <img src="http://internet-shop.tmweb.ru/storage/products/iphone_x.jpg" alt="iPhone X 64GB">
+        <img src="{{ Storage::url($product->image) }}" alt="iPhone X 64GB">
         <div class="caption">
             <h3>{{ $product->name }}</h3>
             <p>{{ $product->price }} ₽</p>
-            <p>
             <form action="{{ route('basket-add', $product) }}" method="POST"> <?php //можно не $product-> id, тк по умолчанию возьмет id ?>
                 @csrf
                 <button type="submit" class="btn btn-primary" role="button">В корзину</button>
@@ -16,7 +15,6 @@
                    class="btn btn-default"
                    role="button">Подробнее</a>
             </form>
-            </p>
         </div>
     </div>
 </div>
