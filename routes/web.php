@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ResetController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,17 +21,31 @@ Auth::routes([
     'verify' => false
 ]); // сократили кол-во auth маршрутов
 
+Route::get('reset', [ResetController::class, 'reset'])->name('reset');
+
 Route::get('/logout', 'Auth\LoginController@logout')->name('get-logout');
 
-Route::group([
-    'middleware' => ['auth', 'is_admin'],
-    'namespace' => 'Admin',
-    'prefix' => 'admin'
-], function () {
-    Route::get('/orders', 'OrderController@index')->name('orders');
+Route::middleware(['auth'])->group(function () {
+    Route::group([
+        'namespace' => 'Person',
+        'prefix' => 'person',
+        'as' => 'person.'
+    ], function () {
+        Route::get('/orders', 'OrderController@index')->name('orders.index');
+        Route::get('/orders/{order}', 'OrderController@show')->name('orders.show');
+    });
 
-    Route::resource('categories', 'CategoryController');
-    Route::resource('products', 'ProductController');
+    Route::group([
+        'middleware' => ['is_admin'],
+        'namespace' => 'Admin',
+        'prefix' => 'admin'
+    ], function () {
+        Route::get('/orders', 'OrderController@index')->name('orders');
+        Route::get('/orders/{order}', 'OrderController@show')->name('orders.show');
+
+        Route::resource('categories', 'CategoryController');
+        Route::resource('products', 'ProductController');
+    });
 });
 
 Route::get('/', 'MainController@index')->name('index');

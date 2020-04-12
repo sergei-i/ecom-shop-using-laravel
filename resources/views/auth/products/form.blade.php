@@ -28,18 +28,20 @@
                 <div class="input-group row">
                     <label for="code" class="col-sm-2 col-form-label">Код: </label>
                     <div class="col-sm-6">
+                        @include('auth.layouts.error', ['fieldName' => 'code'])
                         {{--                        @include('auth.layouts.error', ['fieldName' => 'code'])--}}
                         <input type="text" class="form-control" name="code" id="code"
-                               value="@isset($product){{ $product->code }}@endisset">
+                               value="{{ old('code', isset($product) ? $product->code : null) }}">
                     </div>
                 </div>
                 <br>
                 <div class="input-group row">
                     <label for="name" class="col-sm-2 col-form-label">Название: </label>
                     <div class="col-sm-6">
+                        @include('auth.layouts.error', ['fieldName' => 'name'])
                         {{--                        @include('auth.layouts.error', ['fieldName' => 'name'])--}}
                         <input type="text" class="form-control" name="name" id="name"
-                               value="@isset($product){{ $product->name }}@endisset">
+                               value="{{ old('name', isset($product) ? $product->name : null) }}">
                     </div>
                 </div>
                 <br>
@@ -55,6 +57,7 @@
                 <div class="input-group row">
                     <label for="category_id" class="col-sm-2 col-form-label">Категория: </label>
                     <div class="col-sm-6">
+                        @include('auth.layouts.error', ['fieldName' => 'category_id'])
                         {{--                        @include('auth.layouts.error', ['fieldName' => 'category_id'])--}}
                         <select name="category_id" id="category_id" class="form-control">
                             @foreach($categories as $category)
@@ -73,9 +76,10 @@
                 <div class="input-group row">
                     <label for="description" class="col-sm-2 col-form-label">Описание: </label>
                     <div class="col-sm-6">
+                        @include('auth.layouts.error', ['fieldName' => 'description'])
                         {{--                        @include('auth.layouts.error', ['fieldName' => 'description'])--}}
                         <textarea name="description" id="description" cols="72"
-                                  rows="7">@isset($product){{ $product->description }}@endisset</textarea>
+                                  rows="7">{{ old('description', isset($product) ? $product->description : null) }}</textarea>
                     </div>
                 </div>
                 <br>
@@ -100,52 +104,53 @@
                 <div class="input-group row">
                     <label for="code" class="col-sm-2 col-form-label">Цена: </label>
                     <div class="col-sm-6">
+                        @include('auth.layouts.error', ['fieldName' => 'price'])
                         {{--                        @include('auth.layouts.error', ['fieldName' => 'code'])--}}
                         <input type="text" class="form-control" name="price" id="price"
-                               value="@isset($product){{ $product->price }}@endisset">
+                               value="{{ old('price', isset($product) ? $product->price : null) }}">
                     </div>
                 </div>
                 <br>
 
-                {{--                <div class="input-group row">--}}
-                {{--                    <label for="category_id" class="col-sm-2 col-form-label">Свойства товара: </label>--}}
-                {{--                    <div class="col-sm-6">--}}
-                {{--                        @include('auth.layouts.error', ['fieldName' => 'property_id[]'])--}}
-                {{--                        <select name="property_id[]" multiple>--}}
-                {{--                            @foreach($properties as $property)--}}
-                {{--                                <option value="{{ $property->id }}"--}}
-                {{--                                        @isset($product)--}}
-                {{--                                        @if($product->properties->contains($property->id))--}}
-                {{--                                        selected--}}
-                {{--                                    @endif--}}
-                {{--                                    @endisset--}}
-                {{--                                >{{ $property->name }}</option>--}}
-                {{--                            @endforeach--}}
-                {{--                        </select>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
-                {{--                <br>--}}
+                <div class="input-group row">
+                    <label for="category_id" class="col-sm-2 col-form-label">Свойства товара: </label>
+                    <div class="col-sm-6">
+                        {{--                        @include('auth.layouts.error', ['fieldName' => 'property_id[]'])--}}
+                        {{--                        <select name="property_id[]" multiple>--}}
+                        {{--                            @foreach($properties as $property)--}}
+                        {{--                                <option value="{{ $property->id }}"--}}
+                        {{--                                        @isset($product)--}}
+                        {{--                                        @if($product->properties->contains($property->id))--}}
+                        {{--                                        selected--}}
+                        {{--                                    @endif--}}
+                        {{--                                    @endisset--}}
+                        {{--                                >{{ $property->name }}</option>--}}
+                        {{--                            @endforeach--}}
+                        {{--                        </select>--}}
+                        {{--                    </div>--}}
+                        {{--                </div>--}}
+                        {{--                <br>--}}
 
-                {{--                @foreach ([--}}
-                {{--                'hit' => 'Хит',--}}
-                {{--                'new' => 'Новинка',--}}
-                {{--                'recommend' => 'Рекомендуемые'--}}
-                {{--                ] as $field => $title)--}}
-                {{--                    <div class="form-group row">--}}
-                {{--                        <label for="code" class="col-sm-2 col-form-label">{{ $title }}: </label>--}}
-                {{--                        <div class="col-sm-10">--}}
-                {{--                            <input type="checkbox" name="{{$field}}" id="{{$field}}"--}}
-                {{--                                   @if(isset($product) && $product->$field === 1)--}}
-                {{--                                   checked="'checked"--}}
-                {{--                                @endif--}}
-                {{--                            >--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                {{--                    <br>--}}
-                {{--                @endforeach--}}
-                <button class="btn btn-success">Сохранить</button>
-            </div>
+                        @foreach ([
+                        'hit' => 'Хит',
+                        'new' => 'Новинка',
+                        'recommend' => 'Рекомендуемые'
+                        ] as $field => $title)
+                            <div class="form-group row">
+                                <label for="code" class="col-sm-2 col-form-label">{{ $title }}: </label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" name="{{$field}}" id="{{$field}}"
+                                           @if(isset($product) && $product->$field === 1)
+                                           checked="'checked"
+                                        @endif
+                                    >
+                                </div>
+                            </div>
+                            <br>
+                        @endforeach
+                        <button class="btn btn-success">Сохранить</button>
+                    </div>
         </form>
-        <a href="{{ url()->previous() }}" class="btn btn-default" type="button">Назад</a>
     </div>
+    <a href="{{ url()->previous() }}" class="btn btn-default" type="button">Назад</a>
 @endsection

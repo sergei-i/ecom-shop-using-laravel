@@ -53,6 +53,7 @@
             </tbody>
         </table>
         {{ $products->links() }}
+        <a class="btn btn-default" type="button" href="{{ url()->previous() }}">Назад</a>
         <a class="btn btn-success" type="button" href="{{ route('products.create') }}">Добавить товар</a>
     </div>
 @endsection

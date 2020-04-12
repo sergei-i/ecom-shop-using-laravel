@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -39,11 +40,15 @@ class ProductController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $path = $request->file('image')->store('products');
         $params = $request->all();
-        $params['image'] = $path;
+        unset($params['image']);
+
+        if ($request->has('image')) {
+            $params['image'] = $request->file('image')->store('products');
+        }
+
         Product::create($params);
         return redirect()->route('products.index');
     }
@@ -78,12 +83,22 @@ class ProductController extends Controller
      * @param \App\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        Storage::delete($product->image);
-        $path = $request->file('image')->store('products');
         $params = $request->all();
-        $params['image'] = $path;
+        unset($params['image']);
+
+        if ($request->has('image')) {
+            Storage::delete($product->image);
+            $params['image'] = $request->file('image')->store('products');
+        }
+
+        foreach (['new', 'hit', 'recommend'] as $fieldName) {
+            if (!isset($params[$fieldName])) {
+                $params[$fieldName] = 0;
+            }
+        }
+
         $product->update($params);
         return redirect()->route('products.index');
     }
@@ -96,6 +111,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('products.index');
     }
 }
