@@ -29,7 +29,6 @@
                     <label for="code" class="col-sm-2 col-form-label">Код: </label>
                     <div class="col-sm-6">
                         @include('auth.layouts.error', ['fieldName' => 'code'])
-                        {{--                        @include('auth.layouts.error', ['fieldName' => 'code'])--}}
                         <input type="text" class="form-control" name="code" id="code"
                                value="{{ old('code', isset($product) ? $product->code : null) }}">
                     </div>
@@ -39,7 +38,6 @@
                     <label for="name" class="col-sm-2 col-form-label">Название: </label>
                     <div class="col-sm-6">
                         @include('auth.layouts.error', ['fieldName' => 'name'])
-                        {{--                        @include('auth.layouts.error', ['fieldName' => 'name'])--}}
                         <input type="text" class="form-control" name="name" id="name"
                                value="{{ old('name', isset($product) ? $product->name : null) }}">
                     </div>
@@ -77,7 +75,6 @@
                     <label for="description" class="col-sm-2 col-form-label">Описание: </label>
                     <div class="col-sm-6">
                         @include('auth.layouts.error', ['fieldName' => 'description'])
-                        {{--                        @include('auth.layouts.error', ['fieldName' => 'description'])--}}
                         <textarea name="description" id="description" cols="72"
                                   rows="7">{{ old('description', isset($product) ? $product->description : null) }}</textarea>
                     </div>
@@ -102,16 +99,23 @@
                 </div>
                 <br>
                 <div class="input-group row">
-                    <label for="code" class="col-sm-2 col-form-label">Цена: </label>
+                    <label for="price" class="col-sm-2 col-form-label">Цена: </label>
                     <div class="col-sm-6">
                         @include('auth.layouts.error', ['fieldName' => 'price'])
-                        {{--                        @include('auth.layouts.error', ['fieldName' => 'code'])--}}
                         <input type="text" class="form-control" name="price" id="price"
                                value="{{ old('price', isset($product) ? $product->price : null) }}">
                     </div>
                 </div>
                 <br>
-
+                <div class="input-group row">
+                    <label for="count" class="col-sm-2 col-form-label">Количество: </label>
+                    <div class="col-sm-6">
+                        @include('auth.layouts.error', ['fieldName' => 'count'])
+                        <input type="text" class="form-control" name="count" id="count"
+                               value="{{ old('count', isset($product) ? $product->count : null) }}">
+                    </div>
+                </div>
+                <br>
                 <div class="input-group row">
                     <label for="category_id" class="col-sm-2 col-form-label">Свойства товара: </label>
                     <div class="col-sm-6">
