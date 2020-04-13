@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Basket;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -11,91 +12,51 @@ class BasketController extends Controller
 {
     public function basket()
     {
-        $orderId = session('orderId');
-        if (!is_null($orderId)) {
-            $order = Order::findOrFail($orderId);
-        }
+        $order = (new Basket())->getOrder();
         return view('basket', compact('order'));
     }
 
     public function basketPlace()
     {
-        $orderId = session('orderId');
-        if (is_null($orderId)) {
-            return redirect()->route('index');
+        $basket = new Basket();
+        $order = $basket->getOrder();
+        if (!$basket->countAvailable()) {
+            session()->flash('warning', 'Товар в большем количестве не доступен для заказа');
+            return redirect()->route('basket');
         }
-        $order = Order::find($orderId);
         return view('order', compact('order'));
     }
 
-    public function basketAdd($productId)
+    public function basketAdd(Product $product)
     {
-        $orderId = session('orderId');
+        $result = (new Basket(true))->addProduct($product);
 
-        if (is_null($orderId)) {
-            $order = Order::create();
-            session(['orderId' => $order->id]);
+        if ($result) {
+            session()->flash('success', 'Товар "' . $product->name . '" добавлен в корзину');
         } else {
-            $order = Order::find($orderId);
+            session()->flash('warning', 'Товар "' . $product->name . '" в большем количестве не доступен для заказа');
         }
-
-        if ($order->products->contains($productId)) {
-            $pivotRaw = $order->products()->where('product_id', $productId)->first()->pivot;
-            $pivotRaw->count++;
-            $pivotRaw->update();
-        } else {
-            $order->products()->attach($productId);
-        }
-
-        if(Auth::check()) {
-            $order->user_id = Auth::id();
-            $order->save();
-        }
-
-        $product = Product::find($productId);
-        Order::changeFullSum($product->price);
-        session()->flash('success', 'Товар "' . $product->name . '" добавлен в корзину');
 
         return redirect()->route('basket'); //избавляет от выполнения такого же действия при обновлении страницы
     }
 
-    public function basketRemove($productId)
+    public function basketRemove(Product $product)
     {
-        $orderId = session('orderId');
+        (new Basket())->removeProduct($product);
 
-        if (is_null($orderId)) {
-            return redirect()->route('basket');
-        }
-        $order = Order::find($orderId);
-
-        if ($order->products->contains($productId)) {
-            $pivotRaw = $order->products()->where('product_id', $productId)->first()->pivot;
-            if ($pivotRaw->count < 2) {
-                $order->products()->detach($productId);
-            } else {
-                $pivotRaw->count--;
-                $pivotRaw->update();
-            }
-        }
-        $product = Product::find($productId);
-        Order::changeFullSum(-$product->price);
-        session()->flash('warning', 'Товар "' . $product->name . '" удален');
+        session()->flash('warning', 'Товар "' . $product->name . '" удален из корзины');
 
         return redirect()->route('basket'); //избавляет от выполнения такого же действия при обновлении страницы
     }
 
     public function basketConfirm(Request $request)
     {
-        $orderId = session('orderId');
-        if (is_null($orderId)) {
-            return redirect()->route('index');
-        }
-        $order = Order::find($orderId);
-        $success = $order->saveOrder($request->name, $request->phone);
+        $success = (new Basket())->saveOrder($request->name, $request->phone);
+
         if ($success) {
             session()->flash('success', 'Ваш заказ принят в обработку!');
         } else {
-            session()->flash('warning', 'Случилась ошибка');
+            session()->flash('warning', 'Товар в большем количестве не доступен для заказа');
         }
 
         Order::eraseOrderSum();

@@ -19,6 +19,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '71990',
                 'category_id' => 1,
                 'image' => 'products/iphone_x.jpg',
+                'new' => rand(0, 1),
+                'hit' => rand(0, 1),
+                'recommend' => rand(0, 1),
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'iPhone X 256GB',
@@ -27,6 +31,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '89990',
                 'category_id' => 1,
                 'image' => 'products/iphone_x_silver.jpg',
+                'new' => rand(0, 1),
+                'hit' => rand(0, 1),
+                'recommend' => 0,
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'HTC One S',
@@ -35,6 +43,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '12490',
                 'category_id' => 1,
                 'image' => 'products/htc_one_s.png',
+                'new' => rand(0, 1),
+                'hit' => 0,
+                'recommend' => rand(0, 1),
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'iPhone 5SE',
@@ -43,6 +55,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '17221',
                 'category_id' => 1,
                 'image' => 'products/iphone_5.jpg',
+                'new' => 0,
+                'hit' => rand(0, 1),
+                'recommend' => rand(0, 1),
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'Наушники Beats Audio',
@@ -51,6 +67,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '20221',
                 'category_id' => 2,
                 'image' => 'products/beats.jpg',
+                'new' => rand(0, 1),
+                'hit' => 0,
+                'recommend' => 0,
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'Камера GoPro',
@@ -59,6 +79,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '12000',
                 'category_id' => 2,
                 'image' => 'products/gopro.jpg',
+                'new' => 0,
+                'hit' => rand(0, 1),
+                'recommend' => 0,
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'Камера Panasonic HC-V770',
@@ -67,6 +91,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '27900',
                 'category_id' => 2,
                 'image' => 'products/video_panasonic.jpg',
+                'new' => rand(0, 1),
+                'hit' => 0,
+                'recommend' => 0,
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'Кофемашина DeLongi',
@@ -75,6 +103,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '25200',
                 'category_id' => 3,
                 'image' => 'products/delongi.jpg',
+                'new' => rand(0, 1),
+                'hit' => rand(0, 1),
+                'recommend' => rand(0, 1),
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'Холодильник Haier',
@@ -83,6 +115,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '40200',
                 'category_id' => 3,
                 'image' => 'products/haier.jpg',
+                'new' => 0,
+                'hit' => rand(0, 1),
+                'recommend' => rand(0, 1),
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'Блендер Moulinex',
@@ -91,6 +127,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '4200',
                 'category_id' => 3,
                 'image' => 'products/moulinex.jpg',
+                'new' => rand(0, 1),
+                'hit' => rand(0, 1),
+                'recommend' => 0,
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'Мясорубка Bosch',
@@ -99,6 +139,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '9200',
                 'category_id' => 3,
                 'image' => 'products/bosch.jpg',
+                'new' => rand(0, 1),
+                'hit' => 0,
+                'recommend' => rand(0, 1),
+                'count' => rand(0, 3)
             ],
             [
                 'name' => 'Samsung Galaxy J6',
@@ -107,6 +151,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => '11980',
                 'category_id' => 1,
                 'image' => 'products/samsung_j6.jpg',
+                'new' => 0,
+                'hit' => rand(0, 1),
+                'recommend' => rand(0, 1),
+                'count' => rand(0, 3)
             ],
         ]);
     }
