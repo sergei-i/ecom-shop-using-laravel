@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\ResetController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/', 'MainController@index')->name('index');
 Route::get('/categories', 'MainController@categories')->name('categories');
+Route::post('subscription/{product}', [MainController::class, 'subscribe'])->name('subscription');
 
 Route::group(['prefix' => 'basket'], function () {
     Route::post('/add/{product}', 'BasketController@basketAdd')->name('basket-add');

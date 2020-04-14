@@ -4,9 +4,11 @@
 namespace App\Classes;
 
 
+use App\Mail\OrderCreated;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class Basket
 {
@@ -41,17 +43,29 @@ class Basket
         return $this->order;
     }
 
-    public function countAvailable()
+    public function countAvailable($updateCount = false)
     {
         foreach ($this->order->products as $orderProduct) {
-            if ($this->getPivotRow($orderProduct)->count > $orderProduct->count) return false;
+            if ($this->getPivotRow($orderProduct)->count > $orderProduct->count) {
+                return false;
+            }
+            if ($updateCount) {
+                $orderProduct->count -= $this->getPivotRow($orderProduct)->count;
+            }
         }
+        if ($updateCount) {
+            $this->order->products->map->save();
+        }
+
         return true;
     }
 
-    public function saveOrder($name, $phone)
+    public function saveOrder($name, $phone, $email)
     {
-        if (!$this->countAvailable()) return false;
+        if (!$this->countAvailable(true)) {
+            return false;
+        }
+        Mail::to($email)->send(new OrderCreated($name, $this->getOrder()));
         return $this->order->saveOrder($name, $phone);
     }
 
@@ -65,10 +79,14 @@ class Basket
         if ($this->order->products->contains($product->id)) {
             $pivotRaw = $this->getPivotRow($product);
             $pivotRaw->count++;
-            if ($pivotRaw->count > $product->count) return false;
+            if ($pivotRaw->count > $product->count) {
+                return false;
+            }
             $pivotRaw->update();
         } else {
-            if ($product->count == 0) return false;
+            if ($product->count == 0) {
+                return false;
+            }
             $this->order->products()->attach($product->id);
         }
 
