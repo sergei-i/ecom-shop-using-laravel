@@ -43,14 +43,14 @@
                     </div>
                 </div>
                 <br>
-                {{--                <div class="input-group row">--}}
-                {{--                    <label for="name" class="col-sm-2 col-form-label">Название en: </label>--}}
-                {{--                    <div class="col-sm-6">--}}
-                {{--                        @include('auth.layouts.error', ['fieldName' => 'name_en'])--}}
-                {{--                        <input type="text" class="form-control" name="name_en" id="name_en"--}}
-                {{--                               value="@isset($product){{ $product->name_en }}@endisset">--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
+                <div class="input-group row">
+                    <label for="name" class="col-sm-2 col-form-label">Название en: </label>
+                    <div class="col-sm-6">
+                        @include('auth.layouts.error', ['fieldName' => 'name_en'])
+                        <input type="text" class="form-control" name="name_en" id="name_en"
+                               value="@isset($product){{ $product->name_en }}@endisset">
+                    </div>
+                </div>
                 <br>
                 <div class="input-group row">
                     <label for="category_id" class="col-sm-2 col-form-label">Категория: </label>
@@ -80,16 +80,16 @@
                     </div>
                 </div>
                 <br>
-                {{--                <div class="input-group row">--}}
-                {{--                    <label for="description" class="col-sm-2 col-form-label">Описание en: </label>--}}
-                {{--                    <div class="col-sm-6">--}}
-                {{--                        @include('auth.layouts.error', ['fieldName' => 'description_en'])--}}
-                {{--                        <textarea name="description_en" id="description_en" cols="72"--}}
-                {{--                                  rows="7">@isset($product){{ $product->description_en }}@endisset</textarea>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
+                    <div class="input-group row">
+                        <label for="description" class="col-sm-2 col-form-label">Описание en: </label>
+                        <div class="col-sm-6">
+                            @include('auth.layouts.error', ['fieldName' => 'description_en'])
+                            <textarea name="description_en" id="description_en" cols="72"
+                                      rows="7">@isset($product){{ $product->description_en }}@endisset</textarea>
+                        </div>
+                    </div>
                 <br>
-                <div class="input-group row">
+                <div class="input-group ro w">
                     <label for="image" class="col-sm-2 col-form-label">Картинка: </label>
                     <div class="col-sm-10">
                         <label class="btn btn-default btn-file">
