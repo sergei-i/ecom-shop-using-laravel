@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Product;
 use App\Models\Subscription;
+use App\Services\CurrencyRates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -20,7 +21,6 @@ class MainController extends Controller
         //\Debugbar::info($request->ip());
 
         $productsQuery = Product::with('category');
-        //$productsQuery = Product::query();
 
         if ($request->filled('price_from')) {
             $productsQuery->where('price', '>=', $request->price_from);
