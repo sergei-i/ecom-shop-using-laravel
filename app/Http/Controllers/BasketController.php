@@ -60,7 +60,6 @@ class BasketController extends Controller
             session()->flash('warning', 'Товар в большем количестве не доступен для заказа');
         }
 
-        Order::eraseOrderSum();
         return redirect()->route('index');
     }
 }

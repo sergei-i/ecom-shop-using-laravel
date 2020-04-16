@@ -1,6 +1,6 @@
 <p>Уважаемый {{ $name }},</p>
 
-<p>@lang('mail.order_created.your_order') {{ $fullSum }} ₽ создан</p>
+<p>@lang('order_created.your_order') {{ $fullSum }} {{ \App\Services\CurrencyConversion::getCurrencySymbol() }} создан</p>
 
 <table>
     <tbody>
@@ -13,13 +13,13 @@
             </a>
         </td>
         <td>
-            <span class="badge">{{ $product->pivot->count }}</span>
+            <span class="badge">{{ $product->countInOrder }}</span>
             <div class="btn-group form-inline">
                 {{ $product->description }}
             </div>
         </td>
-        <td>{{ $product->price }} ₽</td>
-        <td>{{ $product->getPriceForCount() }} ₽</td>
+        <td>{{ $product->price }} {{ \App\Services\CurrencyConversion::getCurrencySymbol() }}</td>
+        <td>{{ $product->getPriceForCount() }} {{ \App\Services\CurrencyConversion::getCurrencySymbol() }}</td>
     @endforeach
     </tbody>
 </table>

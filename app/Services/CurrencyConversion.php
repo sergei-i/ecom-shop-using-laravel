@@ -29,6 +29,23 @@ class CurrencyConversion
         return self::$container;
     }
 
+    public static function getCurrencyFromSession()
+    {
+        return session('currency', self::DEFAULT_CURRENCY_CODE);
+    }
+
+    public static function getCurrentCurrencyFromSession()
+    {
+        self::loadContainer();
+
+        $currencyCode = self::getCurrencyFromSession();
+        foreach (self::$container as $currency) {
+            if ($currency->code === $currencyCode) {
+                return $currency;
+            }
+        }
+    }
+
     public static function convert($sum, $originCurrencyCode = self::DEFAULT_CURRENCY_CODE, $targetCurrencyCode = null)
     {
         self::loadContainer();
@@ -43,7 +60,7 @@ class CurrencyConversion
         }
 
         if (is_null($targetCurrencyCode)) {
-            $targetCurrencyCode = session('currency', self::DEFAULT_CURRENCY_CODE);
+            $targetCurrencyCode = self::getCurrencyFromSession();
         }
         $targetCurrency = self::$container[$targetCurrencyCode];
 
@@ -61,7 +78,7 @@ class CurrencyConversion
     public static function getCurrencySymbol()
     {
         self::loadContainer();
-        $currencyFromSession = session('currency', self::DEFAULT_CURRENCY_CODE);
+        $currencyFromSession = self::getCurrencyFromSession();
         $currency = self::$container[$currencyFromSession];
         return $currency->symbol;
     }
