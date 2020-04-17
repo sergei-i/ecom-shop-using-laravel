@@ -1,6 +1,6 @@
 <p>Уважаемый {{ $name }},</p>
 
-<p>@lang('order_created.your_order') {{ $fullSum }} {{ \App\Services\CurrencyConversion::getCurrencySymbol() }} создан</p>
+<p>@lang('order_created.your_order') {{ $fullSum }} {{ $currencySymbol }} создан</p>
 
 <table>
     <tbody>
@@ -18,8 +18,8 @@
                 {{ $product->description }}
             </div>
         </td>
-        <td>{{ $product->price }} {{ \App\Services\CurrencyConversion::getCurrencySymbol() }}</td>
-        <td>{{ $product->getPriceForCount() }} {{ \App\Services\CurrencyConversion::getCurrencySymbol() }}</td>
+        <td>{{ $product->price }} {{ $currencySymbol }}</td>
+        <td>{{ $product->getPriceForCount() }} {{ $currencySymbol }}</td>
     @endforeach
     </tbody>
 </table>
